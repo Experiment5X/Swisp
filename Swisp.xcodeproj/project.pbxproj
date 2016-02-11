@@ -14,7 +14,8 @@
 		663A36BD1C6D35020006CE23 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 663A36BB1C6D35020006CE23 /* LaunchScreen.storyboard */; };
 		663A36C81C6D35020006CE23 /* SwispTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A36C71C6D35020006CE23 /* SwispTests.swift */; };
 		663A36D31C6D35020006CE23 /* SwispUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A36D21C6D35020006CE23 /* SwispUITests.swift */; };
-		663A36E21C6D354B0006CE23 /* Interpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A36E11C6D354B0006CE23 /* Interpreter.swift */; };
+		663A36E21C6D354B0006CE23 /* AbstractSyntaxTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A36E11C6D354B0006CE23 /* AbstractSyntaxTree.swift */; };
+		663A36E41C6D39A90006CE23 /* AbstractSyntaxTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A36E31C6D39A90006CE23 /* AbstractSyntaxTreeTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +49,8 @@
 		663A36CE1C6D35020006CE23 /* SwispUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwispUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		663A36D21C6D35020006CE23 /* SwispUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwispUITests.swift; sourceTree = "<group>"; };
 		663A36D41C6D35020006CE23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		663A36E11C6D354B0006CE23 /* Interpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Interpreter.swift; path = Swisp/Interpreter/Interpreter.swift; sourceTree = "<group>"; };
+		663A36E11C6D354B0006CE23 /* AbstractSyntaxTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AbstractSyntaxTree.swift; path = Swisp/Interpreter/AbstractSyntaxTree.swift; sourceTree = "<group>"; };
+		663A36E31C6D39A90006CE23 /* AbstractSyntaxTreeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractSyntaxTreeTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 			children = (
 				663A36C71C6D35020006CE23 /* SwispTests.swift */,
 				663A36C91C6D35020006CE23 /* Info.plist */,
+				663A36E31C6D39A90006CE23 /* AbstractSyntaxTreeTests.swift */,
 			);
 			path = SwispTests;
 			sourceTree = "<group>";
@@ -131,7 +134,7 @@
 		663A36E01C6D35240006CE23 /* Interpreter */ = {
 			isa = PBXGroup;
 			children = (
-				663A36E11C6D354B0006CE23 /* Interpreter.swift */,
+				663A36E11C6D354B0006CE23 /* AbstractSyntaxTree.swift */,
 			);
 			name = Interpreter;
 			sourceTree = "<group>";
@@ -267,7 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				663A36E21C6D354B0006CE23 /* Interpreter.swift in Sources */,
+				663A36E21C6D354B0006CE23 /* AbstractSyntaxTree.swift in Sources */,
 				663A36B51C6D35020006CE23 /* ViewController.swift in Sources */,
 				663A36B31C6D35020006CE23 /* AppDelegate.swift in Sources */,
 			);
@@ -277,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				663A36E41C6D39A90006CE23 /* AbstractSyntaxTreeTests.swift in Sources */,
 				663A36C81C6D35020006CE23 /* SwispTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
