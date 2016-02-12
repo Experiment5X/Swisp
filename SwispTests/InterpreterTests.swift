@@ -19,8 +19,8 @@ class InterpreterTests: XCTestCase
         
         do
         {
-            let interpreter = try Interpreter(lispExpression: textExpression)
-            let result = try interpreter.evaluate()
+            let interpreter = try Interpreter()
+            let result = try interpreter.evaluate(textExpression)
             
             XCTAssertEqual(expectedResult, result)
         }
@@ -37,8 +37,27 @@ class InterpreterTests: XCTestCase
         
         do
         {
-            let interpreter = try Interpreter(lispExpression: textExpression)
-            let result = try interpreter.evaluate()
+            let interpreter = try Interpreter()
+            let result = try interpreter.evaluate(textExpression)
+            
+            XCTAssertEqual(expectedResult, result)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
+    }
+    
+    func testVariables()
+    {
+        let expectedResult = "30"
+        
+        do
+        {
+            let interpreter = try Interpreter()
+            try interpreter.evaluate("(define a 5)")
+            
+            let result = try interpreter.evaluate("(* (+ a a) 3)")
             
             XCTAssertEqual(expectedResult, result)
         }

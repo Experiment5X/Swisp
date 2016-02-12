@@ -13,38 +13,32 @@ enum InterpreterError: ErrorType
     case EmptyExpression
     case InvalidFunctionType
     case UndefinedFunction
+    case InvalidDefineArguments
+    case NullFunctionReturnValue
+    case VariableAlreadyDefined
 }
 
 class Interpreter
 {
-    private var abstractSyntaxTree: AbstractSyntaxTree = try! AbstractSyntaxTree(lispExpression: "")
-    private var environment: [Symbol] = []
+    private var environment: [String: AnyObject] = [:]
     
-    init(lispExpression: String) throws
+    init() throws
     {
-        try abstractSyntaxTree = AbstractSyntaxTree(lispExpression: lispExpression)
-        
         // add all the library functions
-        environment.append(Function(name: "+", operation: add))
-        environment.append(Function(name: "-", operation: subtract))
-        environment.append(Function(name: "*", operation: multiply))
-        environment.append(Function(name: "/", operation: divide))
-        environment.append(Function(name: "quote", operation: quote))
+        environment["+"] = Function(name: "+", operation: add)
+        environment["-"] = Function(name: "-", operation: subtract)
+        environment["*"] = Function(name: "*", operation: multiply)
+        environment["/"] = Function(name: "/", operation: divide)
+        environment["quote"] = Function(name: "quote", operation: quote)
     }
     
-    func evaluate() throws -> String
+    func evaluate(lispExpression: String) throws -> String
     {
-        if let evaluated = try evaluate(self.abstractSyntaxTree.tree)
-        {
-            return evaluated.description
-        }
-        else
-        {
-            return "An error occurred";
-        }
+        let abstractSyntaxTree = try AbstractSyntaxTree(lispExpression: lispExpression)
+        return try evaluate(abstractSyntaxTree.tree).description
     }
     
-    private func evaluate(tree: AnyObject) throws -> AnyObject?
+    private func evaluate(tree: AnyObject) throws -> AnyObject
     {
         if tree is [AnyObject]
         {
@@ -60,20 +54,38 @@ class Interpreter
             }
             
             let functionName = tokens[0] as! String
-            if let function = getFunction(functionName)
+            if functionName == "define"
+            {
+                if tokens.count != 3
+                {
+                    throw InterpreterError.InvalidDefineArguments
+                }
+                
+                let name = tokens[1] as! String
+                let value = try evaluate(tokens[2])
+                
+                try define(name, value: value, environment: &self.environment)
+                
+                return functionName
+            }
+            else if let function = getFunction(functionName)
             {
                 // evaluate the arguments to the function
                 var evaluatedArgs: [AnyObject] = []
                 for i in 1..<tokens.count
                 {
-                    if let evaluatedArg = try evaluate(tokens[i])
-                    {
-	                    evaluatedArgs.append(evaluatedArg)
-                    }
+	                evaluatedArgs.append(try evaluate(tokens[i]))
                 }
                 
                 // perform the operation
-                return try function.operation(args: evaluatedArgs)
+                if let result = try function.operation(args: evaluatedArgs)
+                {
+                    return result
+                }
+                else
+                {
+                    throw InterpreterError.NullFunctionReturnValue
+                }
             }
             else
             {
@@ -82,32 +94,48 @@ class Interpreter
         }
         else if tree is String
         {
-            return tree as! String
+            let str = tree as! String
+            
+            // check to see if it's a variable
+            if let variable = self.environment[str]
+            {
+                if !(variable is Function)
+                {
+	                return variable
+                }
+            }
+            
+            return str
         }
         else if tree is Double
         {
             return tree
         }
-        else
-        {
-            return ""
-        }
+        
+        return ""
     }
     
     func getFunction(name: String) -> Function?
     {
-        for symbol in environment
+        for obj in environment
         {
-            if symbol is Function && symbol.name == name
+            if obj.1 is Function && obj.0 == name
             {
-                return symbol as! Function
+                return obj.1 as! Function
             }
         }
         return nil
     }
     
-    private func define(args: [AnyObject]) -> String
+    private func define(name: String, value: AnyObject, inout environment: [String: AnyObject]) throws
     {
-        return ""
+        if let _ = environment[name]
+        {
+            throw InterpreterError.VariableAlreadyDefined
+        }
+        else
+        {
+            environment[name] = value
+        }
     }
 }
