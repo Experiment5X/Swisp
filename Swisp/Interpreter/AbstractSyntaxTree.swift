@@ -15,13 +15,25 @@ enum AbstractSyntaxTreeError: ErrorType
     case UnexpectedClosedParenthesis
 }
 
+func ToAtomicType(token: String) -> AnyObject
+{
+    if let number = Double(token)
+    {
+        return number
+    }
+    return token as String
+}
+
 class AbstractSyntaxTree: CustomStringConvertible
 {
-    private var tree: AnyObject = []
+    var tree: AnyObject = []
     
     init(lispExpression: String) throws
     {
-        try tree = parse(lispExpression)
+        if lispExpression.characters.count != 0
+        {
+	        try tree = parse(lispExpression)
+        }
     }
     
     func tokenize(textExpression: String) -> [String]
@@ -59,8 +71,6 @@ class AbstractSyntaxTree: CustomStringConvertible
             throw AbstractSyntaxTreeError.UnexpectedEndOfInput
         }
         
-        // (+ 5 (* 4 3))
-        
         let token = tokens.removeFirst()
         if token == "("
         {
@@ -80,17 +90,8 @@ class AbstractSyntaxTree: CustomStringConvertible
         }
         else
         {
-            return atomicType(token)
+            return ToAtomicType(token)
         }
-    }
-    
-    func atomicType(token: String) -> AnyObject
-    {
-        if let number = Double(token)
-        {
-            return number
-        }
-        return token as String
     }
     
     var description: String

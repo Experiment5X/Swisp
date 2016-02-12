@@ -56,4 +56,22 @@ class AbstractSyntaxTreeTests: XCTestCase
             XCTAssert(false)
         }
     }
+    
+    func testEvaluate()
+    {
+        let textExpression = "(+ 5 (* 6 3))"
+        let expectedResult = "23.0"
+        
+        do
+        {
+            let interpreter = try Interpreter(lispExpression: textExpression)
+            let result = try interpreter.evaluate()
+            
+            XCTAssertEqual(expectedResult, result)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
+    }
 }

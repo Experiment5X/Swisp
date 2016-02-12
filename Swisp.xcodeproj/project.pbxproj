@@ -16,6 +16,8 @@
 		663A36D31C6D35020006CE23 /* SwispUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A36D21C6D35020006CE23 /* SwispUITests.swift */; };
 		663A36E21C6D354B0006CE23 /* AbstractSyntaxTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A36E11C6D354B0006CE23 /* AbstractSyntaxTree.swift */; };
 		663A36E41C6D39A90006CE23 /* AbstractSyntaxTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A36E31C6D39A90006CE23 /* AbstractSyntaxTreeTests.swift */; };
+		66EFA6E21C6D609800958366 /* Interpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EFA6E11C6D609800958366 /* Interpreter.swift */; };
+		66EFA6E41C6D626E00958366 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EFA6E31C6D626E00958366 /* Function.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		663A36D41C6D35020006CE23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		663A36E11C6D354B0006CE23 /* AbstractSyntaxTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AbstractSyntaxTree.swift; path = Swisp/Interpreter/AbstractSyntaxTree.swift; sourceTree = "<group>"; };
 		663A36E31C6D39A90006CE23 /* AbstractSyntaxTreeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractSyntaxTreeTests.swift; sourceTree = "<group>"; };
+		66EFA6E11C6D609800958366 /* Interpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Interpreter.swift; path = Swisp/Interpreter/Interpreter.swift; sourceTree = "<group>"; };
+		66EFA6E31C6D626E00958366 /* Function.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Function.swift; path = Swisp/Interpreter/Function.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +139,8 @@
 			isa = PBXGroup;
 			children = (
 				663A36E11C6D354B0006CE23 /* AbstractSyntaxTree.swift */,
+				66EFA6E11C6D609800958366 /* Interpreter.swift */,
+				66EFA6E31C6D626E00958366 /* Function.swift */,
 			);
 			name = Interpreter;
 			sourceTree = "<group>";
@@ -270,9 +276,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66EFA6E21C6D609800958366 /* Interpreter.swift in Sources */,
 				663A36E21C6D354B0006CE23 /* AbstractSyntaxTree.swift in Sources */,
 				663A36B51C6D35020006CE23 /* ViewController.swift in Sources */,
 				663A36B31C6D35020006CE23 /* AppDelegate.swift in Sources */,
+				66EFA6E41C6D626E00958366 /* Function.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,6 +508,7 @@
 				663A36D91C6D35020006CE23 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		663A36DA1C6D35020006CE23 /* Build configuration list for PBXNativeTarget "SwispTests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +517,7 @@
 				663A36DC1C6D35020006CE23 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		663A36DD1C6D35020006CE23 /* Build configuration list for PBXNativeTarget "SwispUITests" */ = {
 			isa = XCConfigurationList;
@@ -516,6 +526,7 @@
 				663A36DF1C6D35020006CE23 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
