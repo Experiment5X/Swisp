@@ -24,11 +24,36 @@ class AbstractSyntaxTreeTests: XCTestCase
 
     func testTokenize()
     {
-        let abstractSyntaxTree = AbstractSyntaxTree()
-        
         let textExpression = "(+ 5 (* 6 3))"
         let expectedResult = [ "(", "+", "5", "(", "*", "6", "3", ")", ")"]
         
-        XCTAssertEqual(abstractSyntaxTree.tokenize(textExpression), expectedResult)
+        do
+        {
+	        let abstractSyntaxTree = try AbstractSyntaxTree(lispExpression: textExpression)
+            
+	        XCTAssertEqual(abstractSyntaxTree.tokenize(textExpression), expectedResult)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
+    }
+    
+    func testParse()
+    {
+        let textExpression = "(+ 5 (* 6 3))"
+        let expectedResult = "[+, 5.0, [*, 6.0, 3.0]]"
+        
+        do
+        {
+            let abstractSyntaxTree = try AbstractSyntaxTree(lispExpression: textExpression)
+            let result = abstractSyntaxTree.description
+            
+            XCTAssertEqual(expectedResult, result)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
     }
 }
