@@ -42,7 +42,7 @@ class AbstractSyntaxTreeTests: XCTestCase
     func testParse()
     {
         let textExpression = "(+ 5 (* 6 3))"
-        let expectedResult = "[+, 5.0, [*, 6.0, 3.0]]"
+        let expectedResult = "[\"+\", 5.0, [\"*\", 6.0, 3.0]]"
         
         do
         {
@@ -57,21 +57,5 @@ class AbstractSyntaxTreeTests: XCTestCase
         }
     }
     
-    func testEvaluate()
-    {
-        let textExpression = "(+ 5 (* 6 3))"
-        let expectedResult = "23.0"
-        
-        do
-        {
-            let interpreter = try Interpreter(lispExpression: textExpression)
-            let result = try interpreter.evaluate()
-            
-            XCTAssertEqual(expectedResult, result)
-        }
-        catch
-        {
-            XCTAssert(false)
-        }
-    }
+
 }

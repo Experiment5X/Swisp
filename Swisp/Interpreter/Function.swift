@@ -8,12 +8,12 @@
 
 import Foundation
 
-class Function
+class Function: Symbol
 {
     var name: String = ""
-    var operation: (args: [AnyObject]) -> String
+    var operation: (args: [AnyObject]) throws -> AnyObject?
     
-    init(name: String, operation: (args: [AnyObject])-> String)
+    init(name: String, operation: (args: [AnyObject]) throws -> AnyObject?)
     {
         self.name = name
         self.operation = operation

@@ -13,6 +13,7 @@ enum AbstractSyntaxTreeError: ErrorType
 {
     case UnexpectedEndOfInput
     case UnexpectedClosedParenthesis
+    case UnknownPrimitiveType
 }
 
 func ToAtomicType(token: String) -> AnyObject
@@ -21,7 +22,13 @@ func ToAtomicType(token: String) -> AnyObject
     {
         return number
     }
-    return token as String
+    else if token.characters.first == "\"" && token.characters.last == "\""
+    {
+        let cleanedStr = token.stringByReplacingOccurrencesOfString("\"", withString: "")
+        return cleanedStr
+    }
+    
+    return token
 }
 
 class AbstractSyntaxTree: CustomStringConvertible
@@ -118,7 +125,7 @@ class AbstractSyntaxTree: CustomStringConvertible
         }
         else if object is String
         {
-            str = object as! String
+            str = "\"" + (object as! String) + "\""
         }
         else if object is Double
         {

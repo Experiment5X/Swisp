@@ -18,29 +18,33 @@ enum InterpreterError: ErrorType
 class Interpreter
 {
     private var abstractSyntaxTree: AbstractSyntaxTree = try! AbstractSyntaxTree(lispExpression: "")
-    private var functions: [Function] = []
+    private var environment: [Symbol] = []
     
     init(lispExpression: String) throws
     {
         try abstractSyntaxTree = AbstractSyntaxTree(lispExpression: lispExpression)
         
-        // create all the library functions
-        functions.append(Function(name: "+", operation: { args in
-                        ((args[0] as! Double) + (args[1] as! Double)).description } ))
-        functions.append(Function(name: "-", operation: { args in
-                        ((args[0] as! Double) - (args[1] as! Double)).description } ))
-        functions.append(Function(name: "*", operation: { args in
-                        ((args[0] as! Double) * (args[1] as! Double)).description } ))
-        functions.append(Function(name: "/", operation: { args in
-                        ((args[0] as! Double) / (args[1] as! Double)).description } ))
+        // add all the library functions
+        environment.append(Function(name: "+", operation: add))
+        environment.append(Function(name: "-", operation: subtract))
+        environment.append(Function(name: "*", operation: multiply))
+        environment.append(Function(name: "/", operation: divide))
+        environment.append(Function(name: "quote", operation: quote))
     }
     
     func evaluate() throws -> String
     {
-        return try evaluate(self.abstractSyntaxTree.tree)
+        if let evaluated = try evaluate(self.abstractSyntaxTree.tree)
+        {
+            return evaluated.description
+        }
+        else
+        {
+            return "An error occurred";
+        }
     }
     
-    private func evaluate(tree: AnyObject) throws -> String
+    private func evaluate(tree: AnyObject) throws -> AnyObject?
     {
         if tree is [AnyObject]
         {
@@ -62,12 +66,14 @@ class Interpreter
                 var evaluatedArgs: [AnyObject] = []
                 for i in 1..<tokens.count
                 {
-                    let evaluatedArg = try ToAtomicType(evaluate(tokens[i]))
-                    evaluatedArgs.append(evaluatedArg)
+                    if let evaluatedArg = try evaluate(tokens[i])
+                    {
+	                    evaluatedArgs.append(evaluatedArg)
+                    }
                 }
                 
-                // perform the operatioj
-                return function.operation(args: evaluatedArgs)
+                // perform the operation
+                return try function.operation(args: evaluatedArgs)
             }
             else
             {
@@ -80,7 +86,7 @@ class Interpreter
         }
         else if tree is Double
         {
-            return tree.description
+            return tree
         }
         else
         {
@@ -90,13 +96,18 @@ class Interpreter
     
     func getFunction(name: String) -> Function?
     {
-        for function in functions
+        for symbol in environment
         {
-            if function.name == name
+            if symbol is Function && symbol.name == name
             {
-                return function
+                return symbol as! Function
             }
         }
         return nil
+    }
+    
+    private func define(args: [AnyObject]) -> String
+    {
+        return ""
     }
 }
