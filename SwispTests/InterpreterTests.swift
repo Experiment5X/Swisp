@@ -83,4 +83,55 @@ class InterpreterTests: XCTestCase
             XCTAssert(false)
         }
     }
+    
+    func testCar()
+    {
+        let expectedResult = "1"
+       
+        do
+        {
+            let interpreter = try Interpreter()
+            let result = try interpreter.evaluate("(car '(1 2 3 4 5))")
+            
+            XCTAssertEqual(expectedResult, result)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
+    }
+    
+    func testCdr()
+    {
+        let expectedResult = "[2, 3, 4, 5]"
+       
+        do
+        {
+            let interpreter = try Interpreter()
+            let result = try interpreter.evaluate("(cdr '(1 2 3 4 5))")
+            
+            XCTAssertEqual(expectedResult, result)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
+    }
+    
+    func testCons()
+    {
+        let expectedResult = "[1, 2, 3, 4, 5]"
+       
+        do
+        {
+            let interpreter = try Interpreter()
+            let result = try interpreter.evaluate("(cons 1 2 3 4 5)")
+            
+            XCTAssertEqual(expectedResult, result)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
+    }
 }

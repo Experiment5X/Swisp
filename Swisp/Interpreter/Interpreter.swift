@@ -30,6 +30,9 @@ class Interpreter
         environment["*"] = Function(name: "*", operation: multiply)
         environment["/"] = Function(name: "/", operation: divide)
         environment["quote"] = Function(name: "quote", operation: quote)
+        environment["car"] = Function(name: "car", operation: car)
+        environment["cdr"] = Function(name: "cdr", operation: cdr)
+        environment["cons"] = Function(name: "cons", operation: cons)
     }
     
     func evaluate(lispExpression: String) throws -> String

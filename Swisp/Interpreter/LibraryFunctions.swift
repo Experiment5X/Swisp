@@ -11,6 +11,7 @@ import Foundation
 enum FunctionError: ErrorType
 {
     case InvalidNumberOfArguments
+    case InvalidArgumentType
 }
 
 func add(args: [AnyObject]) throws -> AnyObject?
@@ -94,4 +95,49 @@ func quote(args: [AnyObject]) throws -> AnyObject?
     }
     
     return text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+}
+
+func car(args: [AnyObject]) throws -> AnyObject?
+{
+    if args.count != 1
+    {
+        throw FunctionError.InvalidNumberOfArguments
+    }
+    
+    if let list = args[0] as? [AnyObject]
+    {
+        return list.first
+    }
+    else
+    {
+        throw FunctionError.InvalidArgumentType
+    }
+}
+
+func cdr(args: [AnyObject]) throws -> AnyObject?
+{
+    if args.count != 1
+    {
+        throw FunctionError.InvalidNumberOfArguments
+    }
+    
+    if var list = args[0] as? [AnyObject]
+    {
+        list.removeFirst()
+        return list
+    }
+    else
+    {
+        throw FunctionError.InvalidArgumentType
+    }
+}
+
+func cons(args: [AnyObject]) throws -> AnyObject?
+{
+    if args.count == 0
+    {
+        throw FunctionError.InvalidNumberOfArguments
+    }
+    
+    return args
 }
