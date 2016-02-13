@@ -29,7 +29,7 @@ class InterpreterTests: XCTestCase
             XCTAssert(false)
         }
     }
-    
+
     func testEvaluate()
     {
         let textExpression = "(+ 5 (* 6 3))"
@@ -58,6 +58,23 @@ class InterpreterTests: XCTestCase
             try interpreter.evaluate("(define a 5)")
             
             let result = try interpreter.evaluate("(* (+ a a) 3)")
+            
+            XCTAssertEqual(expectedResult, result)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
+    }
+    
+    func testLists()
+    {
+        let expectedResult = "[1, 2, 3, 4, 5]"
+       
+        do
+        {
+            let interpreter = try Interpreter()
+            let result = try interpreter.evaluate("(+ '(1 2) '(3 4 5))")
             
             XCTAssertEqual(expectedResult, result)
         }

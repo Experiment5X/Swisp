@@ -35,7 +35,9 @@ class Interpreter
     func evaluate(lispExpression: String) throws -> String
     {
         let abstractSyntaxTree = try AbstractSyntaxTree(lispExpression: lispExpression)
-        return try evaluate(abstractSyntaxTree.tree).description
+        let result = toString(try evaluate(abstractSyntaxTree.tree))
+        
+        return result
     }
     
     private func evaluate(tree: AnyObject) throws -> AnyObject
@@ -56,14 +58,27 @@ class Interpreter
             let functionName = tokens[0] as! String
             if functionName == "define"
             {
-                if tokens.count != 3
+                // calculate the expected token count
+                var expectedTokenCount = 3
+                for token in tokens
+                {
+                    if token is String && token as! String == "'"
+                    {
+                        expectedTokenCount = 4
+                    }
+                }
+                
+                // check for corrent number of tokens for define call
+                if tokens.count != expectedTokenCount
                 {
                     throw InterpreterError.InvalidDefineArguments
                 }
                 
+                // get the arguments for define
                 let name = tokens[1] as! String
-                let value = try evaluate(tokens[2])
+                let value = (expectedTokenCount == 3) ? try evaluate(tokens[2]) : tokens[3]
                 
+                // define the variable in the global environment
                 try define(name, value: value, environment: &self.environment)
                 
                 return functionName
@@ -74,7 +89,16 @@ class Interpreter
                 var evaluatedArgs: [AnyObject] = []
                 for i in 1..<tokens.count
                 {
-	                evaluatedArgs.append(try evaluate(tokens[i]))
+                    // check for the ' token which indicates not to evaluate the following expression
+                    if tokens[i - 1] is String && tokens[i - 1] as! String == "'"
+                    {
+                        evaluatedArgs.append(tokens[i])
+                    }
+                    // don't add the ' token to the arg list
+                    else if !(tokens[i] is String && tokens[i] as! String == "'")
+                    {
+		                evaluatedArgs.append(try evaluate(tokens[i]))
+                    }
                 }
                 
                 // perform the operation
@@ -136,6 +160,38 @@ class Interpreter
         else
         {
             environment[name] = value
+        }
+    }
+    
+    private func toString(value: AnyObject) -> String
+    {
+        if value is String || value is Double
+        {
+            return value.description
+        }
+        else if value is [AnyObject]
+        {
+            var txt = "["
+            let values: [AnyObject] = value as! [AnyObject]
+            
+            for val in values
+            {
+                if val === values.last
+                {
+                    txt += toString(val)
+                }
+                else
+                {
+                    txt += toString(val) + ", "
+                }
+            }
+            
+            txt += "]"
+            return txt
+        }
+        else
+        {
+            return "Unknown Type"
         }
     }
 }

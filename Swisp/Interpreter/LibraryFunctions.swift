@@ -28,10 +28,14 @@ func add(args: [AnyObject]) throws -> AnyObject?
     {
         return (args[0] as! String) + (args[1] as! String)
     }
-    //else if args[0] is Array && args[1] is Array
-    //{
-	//    return (args[0] as! String) + (args[1] as! String)
-    //}
+    else if args[0] is [AnyObject] && args[1] is [AnyObject]
+    {
+        var list1 = args[0] as! [AnyObject]
+        let list2 = args[1] as! [AnyObject]
+        
+        list1.appendContentsOf(list2)
+        return list1
+    }
     
     return nil;
 }
