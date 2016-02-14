@@ -225,6 +225,7 @@
 				TargetAttributes = {
 					663A36AE1C6D35020006CE23 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = S4EVFGSXC6;
 					};
 					663A36C21C6D35020006CE23 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -439,7 +440,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Swisp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = expetelek.Swisp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -450,7 +453,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Swisp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = expetelek.Swisp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

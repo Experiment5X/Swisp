@@ -22,7 +22,7 @@ class Interpreter
 {
     private var environment: [String: AnyObject] = [:]
     
-    init() throws
+    init()
     {
         // add all the library functions
         environment["+"] = Function(name: "+", operation: add)
