@@ -8,6 +8,7 @@
 //  A lot of the code was derived from this tutorial http://norvig.com/lispy.html
 
 import Foundation
+import UIKit
 
 enum AbstractSyntaxTreeError: ErrorType
 {
@@ -137,5 +138,38 @@ class AbstractSyntaxTree: CustomStringConvertible
         }
         
         return str
+    }
+    
+    class func ToAttributedString(object: AnyObject) -> NSAttributedString
+    {
+        var toReturn: NSMutableAttributedString = NSMutableAttributedString()
+        if object is [AnyObject]
+        {
+            // add opening parenthesis
+            toReturn.appendAttributedString(NSAttributedString(string: "[", attributes: [NSForegroundColorAttributeName: UIColor.redColor()]))
+           
+            for obj in object as! [AnyObject]
+            {
+                toReturn.appendAttributedString(ToAttributedString(obj))
+                toReturn.appendAttributedString(NSAttributedString(string: ", "))
+            }
+            
+            // remove the extra ", "
+            toReturn = NSMutableAttributedString(attributedString: toReturn.attributedSubstringFromRange(NSMakeRange(0, toReturn.length - 2)))
+            
+            // add closing parenthesis
+            toReturn.appendAttributedString(NSAttributedString(string: "]", attributes: [NSForegroundColorAttributeName: UIColor.redColor()]))
+        }
+        else if object is String
+        {
+            let quotedString = "\"" + (object as! String) + "\""
+            toReturn.appendAttributedString(NSAttributedString(string: quotedString, attributes: [NSForegroundColorAttributeName: UIColor.magentaColor()]))
+        }
+        else if object is Double
+        {
+            toReturn.appendAttributedString(NSAttributedString(string: (object as! Double).description, attributes: [NSForegroundColorAttributeName: UIColor.blueColor()]))
+        }
+        
+        return toReturn
     }
 }

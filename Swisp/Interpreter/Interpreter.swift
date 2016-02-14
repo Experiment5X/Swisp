@@ -44,6 +44,14 @@ class Interpreter
         return result
     }
     
+    func evaluteToAttributedString(lispExpression: String) throws -> NSAttributedString
+    {
+        let abstractSyntaxTree = try AbstractSyntaxTree(lispExpression: lispExpression)
+        let result = try evaluateRaw(abstractSyntaxTree.tree)
+        
+        return AbstractSyntaxTree.ToAttributedString(result)
+    }
+    
     func evaluateRaw(tree: AnyObject, localEnvironment: [String: AnyObject] = [:]) throws -> AnyObject
     {
         if tree is [AnyObject]
@@ -94,11 +102,6 @@ class Interpreter
                 {
                     throw InterpreterError.InvalidFunctionDefinition
                 }
-                
-                let a = AbstractSyntaxTree.ToString(tokens[0])
-                let b = AbstractSyntaxTree.ToString(tokens[1])
-                let c = AbstractSyntaxTree.ToString(tokens[2])
-                let d = AbstractSyntaxTree.ToString(tokens[3])
                 
                 let function = UserDefinedFunction(name: tokens[1] as! String,
                                                 argNames: tokens[2] as! [String],
