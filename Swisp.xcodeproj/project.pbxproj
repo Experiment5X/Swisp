@@ -17,6 +17,7 @@
 		663A36E21C6D354B0006CE23 /* AbstractSyntaxTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A36E11C6D354B0006CE23 /* AbstractSyntaxTree.swift */; };
 		663A36E41C6D39A90006CE23 /* AbstractSyntaxTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A36E31C6D39A90006CE23 /* AbstractSyntaxTreeTests.swift */; };
 		66876B391C6FAE7500918DA9 /* LibraryFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66876B381C6FAE7500918DA9 /* LibraryFunctions.swift */; };
+		66CCF30A1C6FFE8E00C7EAF5 /* UserDefinedFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CCF3091C6FFE8E00C7EAF5 /* UserDefinedFunction.swift */; };
 		66EFA6E21C6D609800958366 /* Interpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EFA6E11C6D609800958366 /* Interpreter.swift */; };
 		66EFA6E41C6D626E00958366 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EFA6E31C6D626E00958366 /* Function.swift */; };
 		66EFA6E81C6DB9A100958366 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EFA6E71C6DB9A100958366 /* Variable.swift */; };
@@ -58,6 +59,7 @@
 		663A36E11C6D354B0006CE23 /* AbstractSyntaxTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AbstractSyntaxTree.swift; path = Swisp/Interpreter/AbstractSyntaxTree.swift; sourceTree = "<group>"; };
 		663A36E31C6D39A90006CE23 /* AbstractSyntaxTreeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractSyntaxTreeTests.swift; sourceTree = "<group>"; };
 		66876B381C6FAE7500918DA9 /* LibraryFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LibraryFunctions.swift; path = Swisp/Interpreter/LibraryFunctions.swift; sourceTree = "<group>"; };
+		66CCF3091C6FFE8E00C7EAF5 /* UserDefinedFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDefinedFunction.swift; path = Swisp/Interpreter/UserDefinedFunction.swift; sourceTree = "<group>"; };
 		66EFA6E11C6D609800958366 /* Interpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Interpreter.swift; path = Swisp/Interpreter/Interpreter.swift; sourceTree = "<group>"; };
 		66EFA6E31C6D626E00958366 /* Function.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Function.swift; path = Swisp/Interpreter/Function.swift; sourceTree = "<group>"; };
 		66EFA6E71C6DB9A100958366 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Variable.swift; path = Swisp/Interpreter/Variable.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				66EFA6E11C6D609800958366 /* Interpreter.swift */,
 				66EFA6E31C6D626E00958366 /* Function.swift */,
 				66EFA6EA1C6E84B200958366 /* Symbol.swift */,
+				66CCF3091C6FFE8E00C7EAF5 /* UserDefinedFunction.swift */,
 			);
 			name = Interpreter;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				663A36B31C6D35020006CE23 /* AppDelegate.swift in Sources */,
 				66EFA6E41C6D626E00958366 /* Function.swift in Sources */,
 				66876B391C6FAE7500918DA9 /* LibraryFunctions.swift in Sources */,
+				66CCF30A1C6FFE8E00C7EAF5 /* UserDefinedFunction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

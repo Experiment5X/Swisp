@@ -103,10 +103,10 @@ class AbstractSyntaxTree: CustomStringConvertible
     
     var description: String
     {
-        return convertToString(tree)
+        return AbstractSyntaxTree.ToString(tree)
     }
     
-    func convertToString(object: AnyObject) -> String
+    class func ToString(object: AnyObject) -> String
     {
         var str = ""
         if object is [AnyObject]
@@ -114,7 +114,7 @@ class AbstractSyntaxTree: CustomStringConvertible
             str = "["
             for obj in object as! [AnyObject]
             {
-                str += convertToString(obj) + ", "
+                str += ToString(obj) + ", "
             }
             
             // trim off the extra ", "

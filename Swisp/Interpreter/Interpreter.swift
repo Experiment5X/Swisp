@@ -16,6 +16,7 @@ enum InterpreterError: ErrorType
     case InvalidDefineArguments
     case NullFunctionReturnValue
     case VariableAlreadyDefined
+    case InvalidFunctionDefinition
 }
 
 class Interpreter
@@ -38,12 +39,12 @@ class Interpreter
     func evaluate(lispExpression: String) throws -> String
     {
         let abstractSyntaxTree = try AbstractSyntaxTree(lispExpression: lispExpression)
-        let result = toString(try evaluate(abstractSyntaxTree.tree))
+        let result = toString(try evaluateRaw(abstractSyntaxTree.tree))
         
         return result
     }
     
-    private func evaluate(tree: AnyObject) throws -> AnyObject
+    func evaluateRaw(tree: AnyObject, localEnvironment: [String: AnyObject] = [:]) throws -> AnyObject
     {
         if tree is [AnyObject]
         {
@@ -79,12 +80,31 @@ class Interpreter
                 
                 // get the arguments for define
                 let name = tokens[1] as! String
-                let value = (expectedTokenCount == 3) ? try evaluate(tokens[2]) : tokens[3]
+                let value = (expectedTokenCount == 3) ? try evaluateRaw(tokens[2], localEnvironment: localEnvironment) : tokens[3]
                 
                 // define the variable in the global environment
                 try define(name, value: value, environment: &self.environment)
                 
                 return functionName
+            }
+            else if functionName == "lambda"
+            {
+                // make sure all the pieces of the function are present
+                if tokens.count != 4
+                {
+                    throw InterpreterError.InvalidFunctionDefinition
+                }
+                
+                let a = AbstractSyntaxTree.ToString(tokens[0])
+                let b = AbstractSyntaxTree.ToString(tokens[1])
+                let c = AbstractSyntaxTree.ToString(tokens[2])
+                let d = AbstractSyntaxTree.ToString(tokens[3])
+                
+                let function = UserDefinedFunction(name: tokens[1] as! String,
+                                                argNames: tokens[2] as! [String],
+                                                abstractSyntaxTreeRaw: tokens[3])
+                
+                try define(tokens[1] as! String, value: function, environment: &self.environment)
             }
             else if let function = getFunction(functionName)
             {
@@ -100,8 +120,24 @@ class Interpreter
                     // don't add the ' token to the arg list
                     else if !(tokens[i] is String && tokens[i] as! String == "'")
                     {
-		                evaluatedArgs.append(try evaluate(tokens[i]))
+		                evaluatedArgs.append(try evaluateRaw(tokens[i], localEnvironment: localEnvironment))
                     }
+                }
+                
+                // if it's a user defined function 
+                if function is UserDefinedFunction
+                {
+                    let userFunction = function as! UserDefinedFunction
+                    
+                    // build up the local environment
+                    var localEnvironment: [String: AnyObject] = [:]
+                    for (index, argName) in userFunction.argNames.enumerate()
+                    {
+                        localEnvironment[argName] = evaluatedArgs[index]
+                    }
+                    
+                    // set up the arguments
+                    evaluatedArgs = [localEnvironment, userFunction.abstractSyntaxTreeRaw]
                 }
                 
                 // perform the operation
@@ -130,6 +166,12 @@ class Interpreter
                 {
 	                return variable
                 }
+            }
+            
+            // check to see if it's a local variable
+            if let variable = localEnvironment[str]
+            {
+                return variable
             }
             
             return str

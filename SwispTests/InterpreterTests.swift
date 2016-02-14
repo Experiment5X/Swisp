@@ -134,4 +134,22 @@ class InterpreterTests: XCTestCase
             XCTAssert(false)
         }
     }
+    
+    func testUserDefinedFunction()
+    {
+        let expectedResult = "30"
+       
+        do
+        {
+            let interpreter = try Interpreter()
+            try interpreter.evaluate("(lambda yo (a b) (* a b))")
+            let result = try interpreter.evaluate("(yo 5 6)")
+            
+            XCTAssertEqual(expectedResult, result)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
+    }
 }
