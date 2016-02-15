@@ -141,3 +141,28 @@ func cons(args: [AnyObject]) throws -> AnyObject?
     
     return args
 }
+
+func equals(args: [AnyObject]) throws -> AnyObject?
+{
+    if args.count != 2
+    {
+        throw FunctionError.InvalidNumberOfArguments
+    }
+    
+    if args[0] is Double && args[1] is Double
+    {
+        let num1 = args[0] as! Double
+        let num2 = args[1] as! Double
+        
+        return (num1 == num2) ? 1.0 : 0.0;
+    }
+    else if args[0] is String && args[1] is String
+    {
+        let str1 = args[0] as! String
+        let str2 = args[1] as! String
+        
+        return (str1 == str2) ? 1.0 : 0.0;
+    }
+    
+    return 0.0
+}

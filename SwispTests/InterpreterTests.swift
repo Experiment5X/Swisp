@@ -19,7 +19,7 @@ class InterpreterTests: XCTestCase
         
         do
         {
-            let interpreter = try Interpreter()
+            let interpreter = Interpreter()
             let result = try interpreter.evaluate(textExpression)
             
             XCTAssertEqual(expectedResult, result)
@@ -37,7 +37,7 @@ class InterpreterTests: XCTestCase
         
         do
         {
-            let interpreter = try Interpreter()
+            let interpreter = Interpreter()
             let result = try interpreter.evaluate(textExpression)
             
             XCTAssertEqual(expectedResult, result)
@@ -54,7 +54,7 @@ class InterpreterTests: XCTestCase
         
         do
         {
-            let interpreter = try Interpreter()
+            let interpreter = Interpreter()
             try interpreter.evaluate("(define a 5)")
             
             let result = try interpreter.evaluate("(* (+ a a) 3)")
@@ -73,7 +73,7 @@ class InterpreterTests: XCTestCase
        
         do
         {
-            let interpreter = try Interpreter()
+            let interpreter = Interpreter()
             let result = try interpreter.evaluate("(+ '(1 2) '(3 4 5))")
             
             XCTAssertEqual(expectedResult, result)
@@ -90,7 +90,7 @@ class InterpreterTests: XCTestCase
        
         do
         {
-            let interpreter = try Interpreter()
+            let interpreter = Interpreter()
             let result = try interpreter.evaluate("(car '(1 2 3 4 5))")
             
             XCTAssertEqual(expectedResult, result)
@@ -107,7 +107,7 @@ class InterpreterTests: XCTestCase
        
         do
         {
-            let interpreter = try Interpreter()
+            let interpreter = Interpreter()
             let result = try interpreter.evaluate("(cdr '(1 2 3 4 5))")
             
             XCTAssertEqual(expectedResult, result)
@@ -124,7 +124,7 @@ class InterpreterTests: XCTestCase
        
         do
         {
-            let interpreter = try Interpreter()
+            let interpreter = Interpreter()
             let result = try interpreter.evaluate("(cons 1 2 3 4 5)")
             
             XCTAssertEqual(expectedResult, result)
@@ -141,9 +141,26 @@ class InterpreterTests: XCTestCase
        
         do
         {
-            let interpreter = try Interpreter()
+            let interpreter = Interpreter()
             try interpreter.evaluate("(lambda yo (a b) (* a b))")
             let result = try interpreter.evaluate("(yo 5 6)")
+            
+            XCTAssertEqual(expectedResult, result)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
+    }
+    
+    func testIfEquals()
+    {
+        let expectedResult = "5"
+       
+        do
+        {
+            let interpreter = Interpreter()
+            let result = try interpreter.evaluate("(if (= 4 4) (+ 3 2) (* 2 9))")
             
             XCTAssertEqual(expectedResult, result)
         }

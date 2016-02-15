@@ -17,6 +17,7 @@ enum InterpreterError: ErrorType
     case NullFunctionReturnValue
     case VariableAlreadyDefined
     case InvalidFunctionDefinition
+    case InvalidIfStatement
 }
 
 class Interpreter
@@ -30,6 +31,7 @@ class Interpreter
         environment["-"] = Function(name: "-", operation: subtract)
         environment["*"] = Function(name: "*", operation: multiply)
         environment["/"] = Function(name: "/", operation: divide)
+        environment["="] = Function(name: "=", operation: equals)
         environment["quote"] = Function(name: "quote", operation: quote)
         environment["car"] = Function(name: "car", operation: car)
         environment["cdr"] = Function(name: "cdr", operation: cdr)
@@ -108,6 +110,28 @@ class Interpreter
                                                 abstractSyntaxTreeRaw: tokens[3])
                 
                 try define(tokens[1] as! String, value: function, environment: &self.environment)
+            }
+            else if functionName == "if"
+            {
+                // make sure enough tokens are present
+                if tokens.count < 3 || tokens.count > 4
+                {
+                    throw InterpreterError.InvalidIfStatement
+                }
+                
+                // the only thing that evaluates to false is 0
+                let result = try evaluateRaw(tokens[1])
+                if let numResult = result as? Double
+                {
+                    if numResult == 0 && tokens.count == 4
+                    {
+                        return try evaluateRaw(tokens[3])
+                    }
+                    else
+                    {
+                        return try evaluateRaw(tokens[2])
+                    }
+                }
             }
             else if let function = getFunction(functionName)
             {
@@ -242,4 +266,5 @@ class Interpreter
             return "Unknown Type"
         }
     }
+
 }
