@@ -38,6 +38,11 @@ class Interpreter
         environment["cons"] = Function(name: "cons", operation: cons)
     }
     
+    init(environment: [String: AnyObject])
+    {
+        self.environment = environment
+    }
+    
     func evaluate(lispExpression: String) throws -> String
     {
         let abstractSyntaxTree = try AbstractSyntaxTree(lispExpression: lispExpression)
@@ -120,16 +125,16 @@ class Interpreter
                 }
                 
                 // the only thing that evaluates to false is 0
-                let result = try evaluateRaw(tokens[1])
+                let result = try evaluateRaw(tokens[1], localEnvironment: localEnvironment)
                 if let numResult = result as? Double
                 {
                     if numResult == 0 && tokens.count == 4
                     {
-                        return try evaluateRaw(tokens[3])
+                        return try evaluateRaw(tokens[3], localEnvironment: localEnvironment)
                     }
                     else
                     {
-                        return try evaluateRaw(tokens[2])
+                        return try evaluateRaw(tokens[2], localEnvironment: localEnvironment)
                     }
                 }
             }
@@ -164,7 +169,7 @@ class Interpreter
                     }
                     
                     // set up the arguments
-                    evaluatedArgs = [localEnvironment, userFunction.abstractSyntaxTreeRaw]
+                    evaluatedArgs = [localEnvironment, self.environment, userFunction.abstractSyntaxTreeRaw]
                 }
                 
                 // perform the operation

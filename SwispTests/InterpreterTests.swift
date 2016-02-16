@@ -169,4 +169,22 @@ class InterpreterTests: XCTestCase
             XCTAssert(false)
         }
     }
+    
+    func testRecrusiveFunction()
+    {
+        let expectedResult = "24"
+       
+        do
+        {
+            let interpreter = Interpreter()
+            try interpreter.evaluate("(lambda factorial (num) (if (= num 0) 1 (* (factorial (- num 1)) num)))")
+            let result = try interpreter.evaluate("(factorial 4)")
+            
+            XCTAssertEqual(expectedResult, result)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
+    }
 }

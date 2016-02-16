@@ -26,8 +26,9 @@ class UserDefinedFunction: Function
 func call(args: [AnyObject]) throws -> AnyObject
 {
     let localEnvironment = args[0] as! [String: AnyObject]
-    let abstractSyntaxTreeRaw = args[1]
-    let interpreter = Interpreter()
+    let globalEnvironment = args[1] as! [String: AnyObject]
+    let abstractSyntaxTreeRaw = args[2]
+    let interpreter = Interpreter(environment: globalEnvironment)
     
     return try interpreter.evaluateRaw(abstractSyntaxTreeRaw, localEnvironment: localEnvironment)
 }

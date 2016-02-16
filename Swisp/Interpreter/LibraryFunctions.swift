@@ -154,7 +154,7 @@ func equals(args: [AnyObject]) throws -> AnyObject?
         let num1 = args[0] as! Double
         let num2 = args[1] as! Double
         
-        return (num1 == num2) ? 1.0 : 0.0;
+        return (abs(num1 - num2) < 0.0001) ? 1.0 : 0.0;
     }
     else if args[0] is String && args[1] is String
     {
