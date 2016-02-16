@@ -32,10 +32,15 @@ class Interpreter
         environment["*"] = Function(name: "*", operation: multiply)
         environment["/"] = Function(name: "/", operation: divide)
         environment["="] = Function(name: "=", operation: equals)
+        environment["!="] = Function(name: "!=", operation: notequals)
         environment["quote"] = Function(name: "quote", operation: quote)
         environment["car"] = Function(name: "car", operation: car)
         environment["cdr"] = Function(name: "cdr", operation: cdr)
         environment["cons"] = Function(name: "cons", operation: cons)
+        
+        // add constants
+        environment["pi"] = M_PI as Double
+        environment["e"] = M_E as Double
     }
     
     init(environment: [String: AnyObject])

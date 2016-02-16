@@ -187,4 +187,21 @@ class InterpreterTests: XCTestCase
             XCTAssert(false)
         }
     }
+    
+    func testNotEqual()
+    {
+        let expectedResult = "18"
+        
+        do
+        {
+            let interpreter = Interpreter()
+            let result = try interpreter.evaluate("(if (!= 4 4) (+ 3 2) (* 2 9))")
+            
+            XCTAssertEqual(expectedResult, result)
+        }
+        catch
+        {
+            XCTAssert(false)
+        }
+    }
 }

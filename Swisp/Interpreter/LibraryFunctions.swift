@@ -166,3 +166,16 @@ func equals(args: [AnyObject]) throws -> AnyObject?
     
     return 0.0
 }
+
+func notequals(args: [AnyObject]) throws -> AnyObject?
+{
+    if let result = try equals(args)
+    {
+        if (result as! Double) == 1.0
+        {
+            return 0.0
+        }
+    }
+    
+    return 1.0
+}
